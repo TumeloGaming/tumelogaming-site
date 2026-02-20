@@ -2,18 +2,27 @@
   "hero": {
     "name1": "TUMELO",
     "name2": "GAMING",
-    "tagline": "Hi, I'm Tumelo — a passionate gamer and developer who loves Minecraft, GTA 5, Fortnite, CODM, and Genshin Impact. I stream on Twitch and build things that matter to the gaming community.",
-    "badges": [
+    "tagline": "Gamer & developer who lives in Minecraft, GTA 5, Fortnite, CODM, and Genshin Impact. I build bots, plugins, and mods — and stream it all on Twitch.",
+    "pronouns": "he/him",
+    "skills": [
       "🎮 MC Mod Developer",
       "⚙️ Skript Plugin Dev",
       "🤖 Discord Bot Dev",
       "📡 Twitch Streamer",
-      "🎵 TikTok Creator"
+      "🎵 TikTok Creator",
+      "🔧 Java Modding",
+      "🌐 Web Developer"
     ],
-    "socials": {
-      "twitch": "https://twitch.tv/Yaboistreem",
-      "tiktok": "https://tiktok.com/@tumelogaming"
-    }
+    "stats": {
+      "servers": "14",
+      "experience": "3+"
+    },
+    "socials": [
+      { "id": "twitch",  "label": "Twitch",  "url": "https://twitch.tv/Yaboistreem",    "enabled": true  },
+      { "id": "tiktok",  "label": "TikTok",  "url": "https://tiktok.com/@tumelogaming", "enabled": true  },
+      { "id": "twitter", "label": "Twitter", "url": "",                                  "enabled": false },
+      { "id": "youtube", "label": "YouTube", "url": "",                                  "enabled": false }
+    ]
   },
   "positions": [
     {
@@ -42,86 +51,37 @@
   "projects": [
     {
       "id": "proj1",
-      "icon": "🔐",
       "title": "Password Generator",
       "description": "A clean, secure online password generator tool. Generate strong, random passwords instantly — no storage, no tracking.",
       "link": "https://ineedapassword.netlify.app/",
-      "linkText": "Try it out"
+      "linkText": "Try it out",
+      "pfp": "",
+      "pfpEmoji": "🔐",
+      "platform": "web"
     }
   ],
   "servers": [
-    {
-      "name": "SparkedMC",
-      "role": "SrMod",
-      "color": "mod"
-    },
-    {
-      "name": "BakugoMC",
-      "role": "Mod",
-      "color": "mod"
-    },
-    {
-      "name": "DarkstroMC",
-      "role": "Mod",
-      "color": "mod"
-    },
-    {
-      "name": "PeachMC",
-      "role": "Manager",
-      "color": "manager"
-    },
-    {
-      "name": "Minehub",
-      "role": "Manager",
-      "color": "manager"
-    },
-    {
-      "name": "MineRush",
-      "role": "SrAdmin",
-      "color": "admin"
-    },
-    {
-      "name": "We3klyMC",
-      "role": "Developer",
-      "color": "dev"
-    },
-    {
-      "name": "FrostifyMC",
-      "role": "JrMod",
-      "color": "mod"
-    },
-    {
-      "name": "FrostMC",
-      "role": "Manager",
-      "color": "manager"
-    },
-    {
-      "name": "FrostMC Relaunch",
-      "role": "Executive",
-      "color": "exec"
-    },
-    {
-      "name": "DogsHaven",
-      "role": "Builder",
-      "color": "builder"
-    },
-    {
-      "name": "FireSMP",
-      "role": "Manager",
-      "color": "manager"
-    },
-    {
-      "name": "MineSwim",
-      "role": "Admin",
-      "color": "admin"
-    },
-    {
-      "name": "MineStorm",
-      "role": "Developer",
-      "color": "dev"
-    }
+    { "name": "SparkedMC",        "role": "SrMod",     "color": "mod"     },
+    { "name": "BakugoMC",         "role": "Mod",       "color": "mod"     },
+    { "name": "DarkstroMC",       "role": "Mod",       "color": "mod"     },
+    { "name": "PeachMC",          "role": "Manager",   "color": "manager" },
+    { "name": "Minehub",          "role": "Manager",   "color": "manager" },
+    { "name": "MineRush",         "role": "SrAdmin",   "color": "admin"   },
+    { "name": "We3klyMC",         "role": "Developer", "color": "dev"     },
+    { "name": "FrostifyMC",       "role": "JrMod",     "color": "mod"     },
+    { "name": "FrostMC",          "role": "Manager",   "color": "manager" },
+    { "name": "FrostMC Relaunch", "role": "Executive", "color": "exec"    },
+    { "name": "DogsHaven",        "role": "Builder",   "color": "builder" },
+    { "name": "FireSMP",          "role": "Manager",   "color": "manager" },
+    { "name": "MineSwim",         "role": "Admin",     "color": "admin"   },
+    { "name": "MineStorm",        "role": "Developer", "color": "dev"     }
   ],
+  "contact": {
+    "discord": "@tumelogaming",
+    "discordUrl": "",
+    "email": ""
+  },
   "footer": {
-    "credit": "MADE WITH LOVE ✦ 2025"
+    "credit": "MADE WITH PASSION ✦ 2025"
   }
 }
