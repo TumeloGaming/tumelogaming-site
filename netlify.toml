@@ -1,0 +1,36 @@
+[build]
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Security headers for admin
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+
+# Admin pretty URL — must come BEFORE the catch-all
+[[redirects]]
+  from = "/admin"
+  to   = "/admin/index.html"
+  status = 200
+  force = true
+
+# Do NOT redirect admin/* to index.html — let it serve its own file
+[[redirects]]
+  from = "/admin/*"
+  to   = "/admin/:splat"
+  status = 200
+  force = true
+
+# content.json should always be served as-is (no redirect)
+[[redirects]]
+  from = "/content.json"
+  to   = "/content.json"
+  status = 200
+  force = true

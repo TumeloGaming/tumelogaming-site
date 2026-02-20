@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — TumeloGaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<!-- Netlify Identity Widget -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  :root {
+    --bg: #06060f; --bg2: #0d0d1a; --bg3: #10101f;
+    --surface: rgba(255,255,255,0.04); --surface2: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.08); --border-glow: rgba(139,92,246,0.35);
+    --accent: #8b5cf6; --accent2: #06b6d4; --accent3: #f472b6;
+    --text: #e2e8f0; --text-muted: #64748b; --text-dim: #94a3b8;
+    --success: #4ade80; --error: #f87171;
+    --radius: 14px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; }
+
+  /* ── LOGIN SCREEN ── */
+  #login-screen {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(60,20,120,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(10,80,120,0.2) 0%, transparent 60%), var(--bg);
+  }
+  .login-box {
+    background: var(--bg3); border: 1px solid rgba(139,92,246,0.25); border-radius: 28px;
+    padding: 52px 48px; width: 100%; max-width: 420px;
+    box-shadow: 0 0 80px rgba(139,92,246,0.12), 0 40px 60px rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  .login-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 13px; letter-spacing: 0.15em; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 36px; display: block; }
+  .login-title { font-family: 'Orbitron', monospace; font-size: 26px; font-weight: 700; margin-bottom: 12px; }
+  .login-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 40px; }
+  .login-btn {
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 16px 24px; border-radius: var(--radius); cursor: pointer; transition: all 0.25s;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.03em;
+    background: linear-gradient(135deg, rgba(30,30,60,0.9), rgba(20,30,55,0.9));
+    border: 1px solid rgba(139,92,246,0.35); color: var(--text);
+  }
+  .login-btn:hover { border-color: var(--accent); box-shadow: 0 0 30px rgba(139,92,246,0.2); transform: translateY(-1px); }
+  .login-btn svg { flex-shrink: 0; }
+  .login-note { margin-top: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; }
+
+  /* ── APP SHELL ── */
+  #app { display: none; min-height: 100vh; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(6,6,15,0.92); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 14px; letter-spacing: 0.1em; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .topbar-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 10px; border-radius: 100px; background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3); color: var(--accent); letter-spacing: 0.08em; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .topbar-user { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 8px 18px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { background: #7c3aed; box-shadow: 0 0 20px rgba(139,92,246,0.4); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-ghost { background: transparent; color: var(--text-muted); border-color: var(--border); }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+  .btn-danger { background: transparent; color: var(--error); border-color: rgba(248,113,113,0.3); }
+  .btn-danger:hover { background: rgba(248,113,113,0.1); }
+  .btn-preview { background: transparent; color: var(--accent2); border-color: rgba(6,182,212,0.3); }
+  .btn-preview:hover { background: rgba(6,182,212,0.08); }
+
+  /* ── LAYOUT ── */
+  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 58px); }
+
+  /* ── SIDEBAR ── */
+  .sidebar { background: var(--bg2); border-right: 1px solid var(--border); padding: 24px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .sidebar-section { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 12px 6px; margin-top: 8px; }
+  .sidebar-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; color: var(--text-dim); cursor: pointer; transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+  .sidebar-item:hover { background: var(--surface); color: var(--text); }
+  .sidebar-item.active { background: rgba(139,92,246,0.12); color: var(--accent); border-color: rgba(139,92,246,0.2); }
+  .sidebar-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+  /* ── CONTENT ── */
+  .content { padding: 36px 40px; overflow-y: auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* FORM ELEMENTS */
+  .form-section { margin-bottom: 40px; }
+  .form-section-title { font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); letter-spacing: 0.02em; }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .field input, .field textarea, .field select {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; font-family: 'Syne', sans-serif; font-size: 14px; color: var(--text);
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--border-glow); box-shadow: 0 0 0 3px rgba(139,92,246,0.08); }
+  .field textarea { min-height: 90px; line-height: 1.6; }
+  .field select option { background: #1a1a2e; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 120px; gap: 14px; }
+
+  /* CARD ITEM (for positions/projects/servers) */
+  .item-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 16px; position: relative; transition: border-color 0.2s; }
+  .item-card:hover { border-color: rgba(139,92,246,0.2); }
+  .item-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .item-card-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; }
+  .item-card-actions { display: flex; gap: 8px; }
+  .btn-sm { padding: 5px 12px; font-size: 11px; border-radius: 7px; }
+
+  /* BADGE EDITOR */
+  .badge-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .badge-edit { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
+  .badge-edit .rm { cursor: pointer; color: var(--error); font-size: 14px; line-height: 1; transition: color 0.2s; }
+  .badge-edit .rm:hover { color: #fca5a5; }
+  .badge-add { display: flex; gap: 8px; }
+  .badge-add input { flex: 1; }
+
+  /* SERVER TABLE */
+  .server-table { width: 100%; border-collapse: collapse; }
+  .server-table th { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .server-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .server-table tr:last-child td { border-bottom: none; }
+  .server-table tr:hover td { background: var(--surface); }
+  .server-table input, .server-table select { width: 100%; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text); outline: none; transition: all 0.2s; }
+  .server-table input:focus, .server-table select:focus { border-color: var(--border-glow); background: var(--bg3); }
+  .server-table select { cursor: pointer; }
+  .server-table select option { background: #1a1a2e; }
+
+  .btn-add-row { display: flex; align-items: center; gap: 7px; padding: 10px 16px; border-radius: 10px; border: 1px dashed var(--border); background: transparent; color: var(--text-muted); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 12px; transition: all 0.2s; margin-top: 12px; }
+  .btn-add-row:hover { border-color: rgba(139,92,246,0.3); color: var(--accent); background: rgba(139,92,246,0.05); }
+  .btn-rm-row { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 16px; transition: color 0.2s; padding: 4px; }
+  .btn-rm-row:hover { color: var(--error); }
+
+  /* TOAST */
+  .toast-wrap { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
+  .toast { padding: 13px 26px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.04em; backdrop-filter: blur(16px); opacity: 0; transform: translateY(16px); transition: all 0.35s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.success { background: rgba(74,222,128,0.18); border: 1px solid rgba(74,222,128,0.3); color: var(--success); }
+  .toast.error { background: rgba(248,113,113,0.18); border: 1px solid rgba(248,113,113,0.3); color: var(--error); }
+  .toast.info { background: rgba(139,92,246,0.18); border: 1px solid rgba(139,92,246,0.3); color: var(--accent); }
+
+  /* UNSAVED */
+  .unsaved-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent3); margin-left: 8px; vertical-align: middle; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { flex-direction: row; flex-wrap: wrap; padding: 12px; border-right: none; border-bottom: 1px solid var(--border); }
+    .sidebar-section { display: none; }
+    .content { padding: 24px 20px; }
+    .field-row, .field-row-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <span class="login-logo">TUMELOGAMING</span>
+    <h1 class="login-title">Admin Panel</h1>
+    <p class="login-desc">Sign in with GitHub to access the live site editor. Only your authorized GitHub account can log in.</p>
+    <button class="login-btn" id="login-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+      Continue with GitHub
+    </button>
+    <p class="login-note">🔒 Powered by Netlify Identity</p>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="app">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">TG</span>
+      <span class="topbar-badge">ADMIN</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-user" id="user-email"></span>
+      <a href="/" target="_blank" class="btn btn-preview">⬡ View Site</a>
+      <button class="btn btn-primary" id="save-btn" onclick="saveAll()">💾 Publish Changes</button>
+      <button class="btn btn-danger" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <span class="sidebar-section">Content</span>
+      <div class="sidebar-item active" onclick="showPage('hero')"><span class="icon">🌟</span> Hero / About</div>
+      <div class="sidebar-item" onclick="showPage('positions')"><span class="icon">🛡️</span> Positions</div>
+      <div class="sidebar-item" onclick="showPage('projects')"><span class="icon">🔧</span> Projects</div>
+      <div class="sidebar-item" onclick="showPage('servers')"><span class="icon">🎮</span> MC Servers</div>
+      <span class="sidebar-section">Other</span>
+      <div class="sidebar-item" onclick="showPage('footer')"><span class="icon">🔗</span> Footer</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- HERO PAGE -->
+      <div class="page active" id="page-hero">
+        <div class="form-section">
+          <p class="form-section-title">Hero Section</p>
+          <div class="field-row">
+            <div class="field">
+              <label>Name Line 1</label>
+              <input type="text" id="hero-name1" placeholder="TUMELO" oninput="markUnsaved()" />
+            </div>
+            <div class="field">
+              <label>Name Line 2</label>
+              <input type="text" id="hero-name2" placeholder="GAMING" oninput="markUnsaved()" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Tagline / Bio</label>
+            <textarea id="hero-tagline" rows="3" oninput="markUnsaved()"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Twitch URL</label>
+              <input type="url" id="hero-twitch" oninput="markUnsaved()" />
+            </div>
+            <div class="field">
+              <label>TikTok URL</label>
+              <input type="url" id="hero-tiktok" oninput="markUnsaved()" />
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <p class="form-section-title">Badges</p>
+          <div class="badge-list" id="badge-list"></div>
+          <div class="badge-add">
+            <input type="text" id="badge-input" placeholder="e.g. 🕹️ New Badge" class="field" style="margin:0;flex:1" />
+            <button class="btn btn-ghost" onclick="addBadge()">+ Add Badge</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POSITIONS PAGE -->
+      <div class="page" id="page-positions">
+        <div class="form-section">
+          <p class="form-section-title">Staff Positions</p>
+          <div id="positions-list"></div>
+          <button class="btn-add-row" onclick="addPosition()">＋ Add Position</button>
+        </div>
+      </div>
+
+      <!-- PROJECTS PAGE -->
+      <div class="page" id="page-projects">
+        <div class="form-section">
+          <p class="form-section-title">Projects</p>
+          <div id="projects-list"></div>
+          <button class="btn-add-row" onclick="addProject()">＋ Add Project</button>
+        </div>
+      </div>
+
+      <!-- SERVERS PAGE -->
+      <div class="page" id="page-servers">
+        <div class="form-section">
+          <p class="form-section-title">Minecraft Server Experience</p>
+          <table class="server-table">
+            <thead>
+              <tr>
+                <th>Server Name</th>
+                <th>Role</th>
+                <th>Color</th>
+                <th style="width:40px"></th>
+              </tr>
+            </thead>
+            <tbody id="servers-tbody"></tbody>
+          </table>
+          <button class="btn-add-row" onclick="addServer()">＋ Add Server</button>
+        </div>
+      </div>
+
+      <!-- FOOTER PAGE -->
+      <div class="page" id="page-footer">
+        <div class="form-section">
+          <p class="form-section-title">Footer</p>
+          <div class="field">
+            <label>Footer Credit Text</label>
+            <input type="text" id="footer-credit" oninput="markUnsaved()" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+// ── NETLIFY IDENTITY ──────────────────────────────────────────────
+const identity = window.netlifyIdentity;
+let currentUser = null;
+let contentData = null;
+let hasUnsaved = false;
+
+identity.on('init', user => {
+  if (user) { currentUser = user; showApp(); }
+  else { showLogin(); }
+});
+identity.on('login', user => { currentUser = user; showApp(); identity.close(); });
+identity.on('logout', () => { currentUser = null; showLogin(); });
+identity.init();
+
+document.getElementById('login-btn').onclick = () => identity.open('login');
+
+function logout() {
+  if (hasUnsaved && !confirm('You have unsaved changes. Sign out anyway?')) return;
+  identity.logout();
+}
+function showLogin() { document.getElementById('login-screen').style.display='flex'; document.getElementById('app').style.display='none'; }
+function showApp()   {
+  document.getElementById('login-screen').style.display='none'; document.getElementById('app').style.display='block';
+  document.getElementById('user-email').textContent = currentUser?.email || '';
+  loadContent();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── LOAD CONTENT ─────────────────────────────────────────────────
+async function loadContent() {
+  try {
+    toast('Loading content...', 'info');
+    const res = await fetch('/content.json?_=' + Date.now());
+    contentData = await res.json();
+    populateForms(contentData);
+    toast('Content loaded ✓', 'success');
+  } catch(e) { toast('Failed to load content.json', 'error'); }
+}
+
+function populateForms(data) {
+  // Hero
+  setVal('hero-name1', data.hero.name1);
+  setVal('hero-name2', data.hero.name2);
+  setVal('hero-tagline', data.hero.tagline);
+  setVal('hero-twitch', data.hero.socials.twitch);
+  setVal('hero-tiktok', data.hero.socials.tiktok);
+  renderBadges(data.hero.badges);
+
+  // Positions
+  renderPositions(data.positions);
+
+  // Projects
+  renderProjects(data.projects);
+
+  // Servers
+  renderServers(data.servers);
+
+  // Footer
+  setVal('footer-credit', data.footer.credit);
+}
+
+function setVal(id, val) { const el = document.getElementById(id); if(el) el.value = val || ''; }
+
+// ── BADGES ───────────────────────────────────────────────────────
+function renderBadges(badges) {
+  const list = document.getElementById('badge-list');
+  list.innerHTML = badges.map((b,i) => `
+    <span class="badge-edit">${b}<span class="rm" onclick="removeBadge(${i})">✕</span></span>
+  `).join('');
+}
+function addBadge() {
+  const input = document.getElementById('badge-input');
+  const val = input.value.trim();
+  if (!val) return;
+  if (!contentData.hero.badges) contentData.hero.badges = [];
+  contentData.hero.badges.push(val);
+  input.value = '';
+  renderBadges(contentData.hero.badges);
+  markUnsaved();
+}
+function removeBadge(i) {
+  contentData.hero.badges.splice(i, 1);
+  renderBadges(contentData.hero.badges);
+  markUnsaved();
+}
+document.getElementById('badge-input').addEventListener('keydown', e => { if(e.key==='Enter') addBadge(); });
+
+// ── POSITIONS ─────────────────────────────────────────────────────
+function renderPositions(positions) {
+  document.getElementById('positions-list').innerHTML = positions.map((p,i) => `
+    <div class="item-card" id="pos-card-${i}">
+      <div class="item-card-header">
+        <span class="item-card-title">POSITION ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="removePosition(${i})">Remove</button>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Icon (emoji)</label><input type="text" id="pos-icon-${i}" value="${p.icon}" oninput="markUnsaved()" maxlength="4" /></div>
+        <div class="field"><label>Tag Label</label><input type="text" id="pos-tag-${i}" value="${p.tag}" oninput="markUnsaved()" /></div>
+        <div class="field"><label>Tag Color</label>
+          <select id="pos-tagcolor-${i}" onchange="markUnsaved()">
+            ${['cyan','purple','pink'].map(c=>`<option value="${c}"${p.tagColor===c?' selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Title</label><input type="text" id="pos-title-${i}" value="${p.title}" oninput="markUnsaved()" /></div>
+      <div class="field"><label>Subtitle</label><input type="text" id="pos-sub-${i}" value="${p.subtitle}" oninput="markUnsaved()" /></div>
+      <div class="field"><label>Description</label><textarea id="pos-desc-${i}" oninput="markUnsaved()">${p.description}</textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Link URL</label><input type="url" id="pos-link-${i}" value="${p.link}" oninput="markUnsaved()" /></div>
+        <div class="field"><label>Link Text</label><input type="text" id="pos-linktext-${i}" value="${p.linkText}" oninput="markUnsaved()" /></div>
+      </div>
+    </div>`).join('');
+}
+function addPosition() {
+  contentData.positions.push({ id:'new'+Date.now(), icon:'✨', title:'New Position', subtitle:'Description', description:'Add a description here.', link:'https://', linkText:'Learn More', tag:'Active', tagColor:'cyan' });
+  renderPositions(contentData.positions); markUnsaved();
+}
+function removePosition(i) {
+  if(!confirm('Remove this position?')) return;
+  contentData.positions.splice(i,1); renderPositions(contentData.positions); markUnsaved();
+}
+
+// ── PROJECTS ──────────────────────────────────────────────────────
+function renderProjects(projects) {
+  document.getElementById('projects-list').innerHTML = projects.map((p,i) => `
+    <div class="item-card">
+      <div class="item-card-header">
+        <span class="item-card-title">PROJECT ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="removeProject(${i})">Remove</button>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Icon (emoji)</label><input type="text" id="proj-icon-${i}" value="${p.icon}" oninput="markUnsaved()" maxlength="4" /></div>
+        <div class="field"><label>Title</label><input type="text" id="proj-title-${i}" value="${p.title}" oninput="markUnsaved()" /></div>
+      </div>
+      <div class="field"><label>Description</label><textarea id="proj-desc-${i}" oninput="markUnsaved()">${p.description}</textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Link URL</label><input type="url" id="proj-link-${i}" value="${p.link}" oninput="markUnsaved()" /></div>
+        <div class="field"><label>Link Text</label><input type="text" id="proj-linktext-${i}" value="${p.linkText}" oninput="markUnsaved()" /></div>
+      </div>
+    </div>`).join('');
+}
+function addProject() {
+  contentData.projects.push({ id:'new'+Date.now(), icon:'🛠️', title:'New Project', description:'Describe your project here.', link:'https://', linkText:'View Project' });
+  renderProjects(contentData.projects); markUnsaved();
+}
+function removeProject(i) {
+  if(!confirm('Remove this project?')) return;
+  contentData.projects.splice(i,1); renderProjects(contentData.projects); markUnsaved();
+}
+
+// ── SERVERS ───────────────────────────────────────────────────────
+const roles = ['mod','admin','manager','dev','exec','builder'];
+function renderServers(servers) {
+  document.getElementById('servers-tbody').innerHTML = servers.map((s,i) => `
+    <tr>
+      <td><input type="text" id="srv-name-${i}" value="${s.name}" oninput="markUnsaved()" /></td>
+      <td><input type="text" id="srv-role-${i}" value="${s.role}" oninput="markUnsaved()" /></td>
+      <td><select id="srv-color-${i}" onchange="markUnsaved()">
+        ${roles.map(r=>`<option value="${r}"${s.color===r?' selected':''}>${r}</option>`).join('')}
+      </select></td>
+      <td><button class="btn-rm-row" onclick="removeServer(${i})" title="Remove">✕</button></td>
+    </tr>`).join('');
+}
+function addServer() {
+  contentData.servers.push({ name:'NewMC', role:'Mod', color:'mod' });
+  renderServers(contentData.servers); markUnsaved();
+}
+function removeServer(i) {
+  contentData.servers.splice(i,1); renderServers(contentData.servers); markUnsaved();
+}
+
+// ── COLLECT FORM DATA ─────────────────────────────────────────────
+function collectData() {
+  const data = JSON.parse(JSON.stringify(contentData)); // deep clone
+  data.hero.name1   = document.getElementById('hero-name1').value.trim();
+  data.hero.name2   = document.getElementById('hero-name2').value.trim();
+  data.hero.tagline = document.getElementById('hero-tagline').value.trim();
+  data.hero.socials.twitch = document.getElementById('hero-twitch').value.trim();
+  data.hero.socials.tiktok = document.getElementById('hero-tiktok').value.trim();
+  // badges already managed in contentData
+  data.hero.badges = contentData.hero.badges;
+
+  // Positions
+  data.positions = contentData.positions.map((p,i) => ({
+    ...p,
+    icon: document.getElementById(`pos-icon-${i}`)?.value || p.icon,
+    title: document.getElementById(`pos-title-${i}`)?.value || p.title,
+    subtitle: document.getElementById(`pos-sub-${i}`)?.value || p.subtitle,
+    description: document.getElementById(`pos-desc-${i}`)?.value || p.description,
+    link: document.getElementById(`pos-link-${i}`)?.value || p.link,
+    linkText: document.getElementById(`pos-linktext-${i}`)?.value || p.linkText,
+    tag: document.getElementById(`pos-tag-${i}`)?.value || p.tag,
+    tagColor: document.getElementById(`pos-tagcolor-${i}`)?.value || p.tagColor,
+  }));
+
+  // Projects
+  data.projects = contentData.projects.map((p,i) => ({
+    ...p,
+    icon: document.getElementById(`proj-icon-${i}`)?.value || p.icon,
+    title: document.getElementById(`proj-title-${i}`)?.value || p.title,
+    description: document.getElementById(`proj-desc-${i}`)?.value || p.description,
+    link: document.getElementById(`proj-link-${i}`)?.value || p.link,
+    linkText: document.getElementById(`proj-linktext-${i}`)?.value || p.linkText,
+  }));
+
+  // Servers
+  data.servers = contentData.servers.map((s,i) => ({
+    name: document.getElementById(`srv-name-${i}`)?.value || s.name,
+    role: document.getElementById(`srv-role-${i}`)?.value || s.role,
+    color: document.getElementById(`srv-color-${i}`)?.value || s.color,
+  }));
+
+  data.footer.credit = document.getElementById('footer-credit').value.trim();
+  return data;
+}
+
+// ── SAVE ──────────────────────────────────────────────────────────
+async function saveAll() {
+  if (!currentUser) { toast('Not logged in!', 'error'); return; }
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true; btn.textContent = '⏳ Saving...';
+  const newData = collectData();
+  try {
+    const token = await currentUser.jwt();
+    const res = await fetch('/.netlify/functions/save-content', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(newData)
+    });
+    const json = await res.json();
+    if (res.ok) {
+      contentData = newData;
+      hasUnsaved = false;
+      btn.textContent = '✓ Published!';
+      toast('Changes published to GitHub! Site will rebuild in ~30s ✨', 'success');
+      setTimeout(() => { btn.textContent = '💾 Publish Changes'; btn.disabled = false; }, 2500);
+    } else {
+      throw new Error(json.error || 'Unknown error');
+    }
+  } catch(e) {
+    toast('Save failed: ' + e.message, 'error');
+    btn.textContent = '💾 Publish Changes'; btn.disabled = false;
+  }
+}
+
+// ── UNSAVED INDICATOR ─────────────────────────────────────────────
+function markUnsaved() {
+  hasUnsaved = true;
+  const btn = document.getElementById('save-btn');
+  if (!btn.querySelector('.unsaved-dot')) {
+    const dot = document.createElement('span'); dot.className='unsaved-dot'; btn.appendChild(dot);
+  }
+}
+window.addEventListener('beforeunload', e => { if(hasUnsaved) { e.preventDefault(); e.returnValue=''; } });
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function toast(msg, type='info') {
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  requestAnimationFrame(() => { el.classList.add('show'); });
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => el.remove(), 400);
+  }, type === 'success' ? 4000 : 3000);
+}
+</script>
+</body>
+</html>

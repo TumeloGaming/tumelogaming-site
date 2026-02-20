@@ -1,0 +1,71 @@
+{
+  "hero": {
+    "name1": "TUMELO",
+    "name2": "GAMING",
+    "tagline": "Hi, I'm Tumelo — a passionate gamer and developer who loves Minecraft, GTA 5, Fortnite, CODM, and Genshin Impact. I stream on Twitch and build things that matter to the gaming community.",
+    "badges": [
+      "🎮 MC Mod Developer",
+      "⚙️ Skript Plugin Dev",
+      "🤖 Discord Bot Dev",
+      "📡 Twitch Streamer",
+      "🎵 TikTok Creator"
+    ],
+    "socials": {
+      "twitch": "https://twitch.tv/Yaboistreem",
+      "tiktok": "https://tiktok.com/@tumelogaming"
+    }
+  },
+  "positions": [
+    {
+      "id": "pos1",
+      "icon": "🛡️",
+      "title": "Moderator — Wrens World",
+      "subtitle": "Youtuber Discord Community",
+      "description": "Keeping the community safe and fun for all members of the Wrens World Discord server.",
+      "link": "https://www.youtube.com/@WrensWorldVT",
+      "linkText": "Visit Channel",
+      "tag": "Active",
+      "tagColor": "cyan"
+    },
+    {
+      "id": "pos2",
+      "icon": "💼",
+      "title": "Freelancer — FuzzLabs",
+      "subtitle": "Development & Custom Solutions",
+      "description": "Offering development services, custom bots, plugins, and solutions through FuzzLabs.",
+      "link": "https://discord.gg/CpZHK5JTYR",
+      "linkText": "Join FuzzLabs",
+      "tag": "Open",
+      "tagColor": "purple"
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj1",
+      "icon": "🔐",
+      "title": "Password Generator",
+      "description": "A clean, secure online password generator tool. Generate strong, random passwords instantly — no storage, no tracking.",
+      "link": "https://ineedapassword.netlify.app/",
+      "linkText": "Try it out"
+    }
+  ],
+  "servers": [
+    { "name": "SparkedMC", "role": "SrMod", "color": "mod" },
+    { "name": "BakugoMC", "role": "Mod", "color": "mod" },
+    { "name": "DarkstroMC", "role": "Mod", "color": "mod" },
+    { "name": "PeachMC", "role": "Manager", "color": "manager" },
+    { "name": "Minehub", "role": "Manager", "color": "manager" },
+    { "name": "MineRush", "role": "SrAdmin", "color": "admin" },
+    { "name": "We3klyMC", "role": "Developer", "color": "dev" },
+    { "name": "FrostifyMC", "role": "JrMod", "color": "mod" },
+    { "name": "FrostMC", "role": "Manager", "color": "manager" },
+    { "name": "FrostMC Relaunch", "role": "Executive", "color": "exec" },
+    { "name": "DogsHaven", "role": "Builder", "color": "builder" },
+    { "name": "FireSMP", "role": "Manager", "color": "manager" },
+    { "name": "MineSwim", "role": "Admin", "color": "admin" },
+    { "name": "MineStorm", "role": "Developer", "color": "dev" }
+  ],
+  "footer": {
+    "credit": "MADE WITH PASSION ✦ 2025"
+  }
+}
