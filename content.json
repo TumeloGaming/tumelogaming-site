@@ -2,7 +2,7 @@
   "hero": {
     "name1": "TUMELO",
     "name2": "GAMING",
-    "tagline": "Gamer & developer who lives in Minecraft, GTA 5, Fortnite, CODM, and Genshin Impact. I build bots, plugins, and mods — and stream it all on Twitch.",
+    "tagline": "18-year-old gamer & developer who lives in Minecraft, GTA 5, Fortnite, CODM, and Genshin Impact. I build bots, plugins, mods and other apps — and stream it all(rarely) on Twitch. I also have a lovely girlfriend who I would give the world to. ❤",
     "pronouns": "he/him",
     "skills": [
       "🎮 MC Mod Developer",
@@ -18,10 +18,30 @@
       "experience": "3+"
     },
     "socials": [
-      { "id": "twitch",  "label": "Twitch",  "url": "https://twitch.tv/Yaboistreem",    "enabled": true  },
-      { "id": "tiktok",  "label": "TikTok",  "url": "https://tiktok.com/@tumelogaming", "enabled": true  },
-      { "id": "twitter", "label": "Twitter", "url": "",                                  "enabled": false },
-      { "id": "youtube", "label": "YouTube", "url": "",                                  "enabled": false }
+      {
+        "id": "twitch",
+        "label": "Twitch",
+        "url": "https://twitch.tv/Yaboistreem",
+        "enabled": true
+      },
+      {
+        "id": "tiktok",
+        "label": "TikTok",
+        "url": "https://tiktok.com/@tumelogaming",
+        "enabled": true
+      },
+      {
+        "id": "twitter",
+        "label": "Twitter",
+        "url": "https://twitter.com/TumeloGaming",
+        "enabled": true
+      },
+      {
+        "id": "youtube",
+        "label": "YouTube",
+        "url": "https://www.youtube.com/@TumeloGaming",
+        "enabled": true
+      }
     ]
   },
   "positions": [
@@ -34,7 +54,7 @@
       "link": "https://www.youtube.com/@WrensWorldVT",
       "linkText": "Visit Channel",
       "tag": "Active",
-      "tagColor": "cyan"
+      "tagColor": "pink"
     },
     {
       "id": "pos2",
@@ -45,7 +65,7 @@
       "link": "https://discord.gg/CpZHK5JTYR",
       "linkText": "Join FuzzLabs",
       "tag": "Open",
-      "tagColor": "purple"
+      "tagColor": "cyan"
     }
   ],
   "projects": [
@@ -58,30 +78,96 @@
       "pfp": "",
       "pfpEmoji": "🔐",
       "platform": "web"
+    },
+    {
+      "id": "proj1771626433878",
+      "title": "TumMulti",
+      "description": "Yes, my very own semi multi-purpose discord bot, I've been working on this bot for quite a while now, but I will eventually iron out the bugs and errors. But the bot is still functional, and you can try it out :D",
+      "link": "https://discord.com/oauth2/authorize?client_id=1153773793660117123",
+      "linkText": "Invite the bot",
+      "pfp": "https://cdn.discordapp.com/attachments/1139292139956736022/1474532656728379534/44be12c34f9bd2ba9a579e4fa5d02937.webp?ex=699a310c&is=6998df8c&hm=59b904417349922db956e744cb570ad7dde35ea36eb71992a44f045dc049dd83&",
+      "pfpEmoji": "🤖",
+      "platform": "discord"
     }
   ],
   "servers": [
-    { "name": "SparkedMC",        "role": "SrMod",     "color": "mod"     },
-    { "name": "BakugoMC",         "role": "Mod",       "color": "mod"     },
-    { "name": "DarkstroMC",       "role": "Mod",       "color": "mod"     },
-    { "name": "PeachMC",          "role": "Manager",   "color": "manager" },
-    { "name": "Minehub",          "role": "Manager",   "color": "manager" },
-    { "name": "MineRush",         "role": "SrAdmin",   "color": "admin"   },
-    { "name": "We3klyMC",         "role": "Developer", "color": "dev"     },
-    { "name": "FrostifyMC",       "role": "JrMod",     "color": "mod"     },
-    { "name": "FrostMC",          "role": "Manager",   "color": "manager" },
-    { "name": "FrostMC Relaunch", "role": "Executive", "color": "exec"    },
-    { "name": "DogsHaven",        "role": "Builder",   "color": "builder" },
-    { "name": "FireSMP",          "role": "Manager",   "color": "manager" },
-    { "name": "MineSwim",         "role": "Admin",     "color": "admin"   },
-    { "name": "MineStorm",        "role": "Developer", "color": "dev"     }
+    {
+      "name": "SparkedMC",
+      "role": "SrMod",
+      "color": "mod"
+    },
+    {
+      "name": "BakugoMC",
+      "role": "Mod",
+      "color": "mod"
+    },
+    {
+      "name": "DarkstroMC",
+      "role": "Mod",
+      "color": "mod"
+    },
+    {
+      "name": "PeachMC",
+      "role": "Manager",
+      "color": "manager"
+    },
+    {
+      "name": "Minehub",
+      "role": "Manager",
+      "color": "manager"
+    },
+    {
+      "name": "MineRush",
+      "role": "SrAdmin",
+      "color": "admin"
+    },
+    {
+      "name": "We3klyMC",
+      "role": "Developer",
+      "color": "dev"
+    },
+    {
+      "name": "FrostifyMC",
+      "role": "JrMod",
+      "color": "mod"
+    },
+    {
+      "name": "FrostMC",
+      "role": "Manager",
+      "color": "manager"
+    },
+    {
+      "name": "FrostMC Relaunch",
+      "role": "Executive",
+      "color": "exec"
+    },
+    {
+      "name": "DogsHaven",
+      "role": "Builder",
+      "color": "builder"
+    },
+    {
+      "name": "FireSMP",
+      "role": "Manager",
+      "color": "manager"
+    },
+    {
+      "name": "MineSwim",
+      "role": "Admin",
+      "color": "admin"
+    },
+    {
+      "name": "MineStorm",
+      "role": "Developer",
+      "color": "dev"
+    }
   ],
   "contact": {
     "discord": "@tumelogaming",
-    "discordUrl": "",
-    "email": ""
+    "discordUrl": "https://discord.com/users/944246408247136297",
+    "email": "kgafaneMC@gmail.com"
   },
   "footer": {
-    "credit": "MADE WITH PASSION ✦ 2025"
+    "credit": "MADE WITH LOVE ✦ 2025"
   }
 }
