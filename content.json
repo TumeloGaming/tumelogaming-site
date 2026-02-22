@@ -58,13 +58,13 @@
     },
     {
       "id": "pos2",
-      "icon": "💼",
-      "title": "Freelancer — FuzzLabs",
-      "subtitle": "Development & Custom Solutions",
-      "description": "Offering development services, custom bots, plugins, and solutions through FuzzLabs.",
-      "link": "https://discord.gg/CpZHK5JTYR",
-      "linkText": "Join FuzzLabs",
-      "tag": "Open",
+      "icon": "⛏️",
+      "title": "MineStorm Dev and Manager",
+      "subtitle": "Server manager and Developer",
+      "description": "Minecraft is an upcoming Minecraft server that I am a Developer and Manager on.",
+      "link": "https://discord.gg/jnQFJzbHCK",
+      "linkText": "Join MineStorm",
+      "tag": "Active",
       "tagColor": "cyan"
     }
   ],
@@ -85,7 +85,7 @@
       "description": "Yes, my very own semi multi-purpose discord bot, I've been working on this bot for quite a while now, but I will eventually iron out the bugs and errors. But the bot is still functional, and you can try it out :D",
       "link": "https://discord.com/oauth2/authorize?client_id=1153773793660117123",
       "linkText": "Invite the bot",
-      "pfp": "https://cdn.discordapp.com/attachments/1139292139956736022/1474532656728379534/44be12c34f9bd2ba9a579e4fa5d02937.webp?ex=699a310c&is=6998df8c&hm=59b904417349922db956e744cb570ad7dde35ea36eb71992a44f045dc049dd83&",
+      "pfp": "https://cdn.discordapp.com/attachments/1139292139956736022/1474532656728379534/44be12c34f9bd2ba9a579e4fa5d02937.webp?ex=699c2b4c&is=699ad9cc&hm=847e9996d3ab3ebd0402f915557b9e798b74be20f444e35e4bf0c2006c7f3f54&",
       "pfpEmoji": "🤖",
       "platform": "discord"
     }
