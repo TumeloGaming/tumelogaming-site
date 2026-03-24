@@ -14,7 +14,7 @@
       "🌐 Web Developer"
     ],
     "stats": {
-      "servers": "14",
+      "servers": "15",
       "experience": "3+"
     },
     "socials": [
@@ -158,6 +158,11 @@
     },
     {
       "name": "MineStorm",
+      "role": "Developer",
+      "color": "dev"
+    },
+    {
+      "name": "Essense SMP",
       "role": "Developer",
       "color": "dev"
     }
