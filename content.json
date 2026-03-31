@@ -61,11 +61,22 @@
       "icon": "⛏️",
       "title": "MineStorm Dev and Manager",
       "subtitle": "Server manager and Developer",
-      "description": "Minecraft is an upcoming Minecraft server that I am a Developer and Manager on.",
+      "description": "MineStorm is an upcoming Minecraft server that I am a Developer and Manager on.",
       "link": "https://discord.gg/jnQFJzbHCK",
       "linkText": "Join MineStorm",
       "tag": "Active",
       "tagColor": "cyan"
+    },
+    {
+      "id": "pos1774962402765",
+      "icon": "✦",
+      "title": "Essence SMP Developer",
+      "subtitle": "Developer",
+      "description": "Essence SMP is another upcoming Minecraft server that I am a Developer on.",
+      "link": "https://discord.gg/ae8uwd99pu",
+      "linkText": "Join Essence SMP",
+      "tag": "Active",
+      "tagColor": "purple"
     }
   ],
   "projects": [
