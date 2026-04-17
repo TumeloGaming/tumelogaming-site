@@ -14,7 +14,7 @@
       "🌐 Web Developer"
     ],
     "stats": {
-      "servers": "15",
+      "servers": "17",
       "experience": "3+"
     },
     "socials": [
@@ -176,6 +176,16 @@
       "name": "Essense SMP",
       "role": "Developer",
       "color": "dev"
+    },
+    {
+      "name": "Nightfall Vengeance",
+      "role": "Manager",
+      "color": "manager"
+    },
+    {
+      "name": "Starlight Smp",
+      "role": "Co-owner",
+      "color": "exec"
     }
   ],
   "contact": {
