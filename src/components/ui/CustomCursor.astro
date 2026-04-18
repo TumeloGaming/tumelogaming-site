@@ -1,0 +1,98 @@
+---
+// ── src/components/ui/CustomCursor.astro ─────────────────────────
+// Modernised dual-ring cursor — same vibe as the original but with
+// smoother lerp, will-change optimisation, and a cleaner hover target
+// selector driven by a data attribute so any component can opt in.
+---
+
+<!-- Cursor dot (snaps instantly to mouse) -->
+<div id="tg-cur" aria-hidden="true"></div>
+<!-- Cursor ring (lags behind with smooth lerp) -->
+<div id="tg-ring" aria-hidden="true"></div>
+
+<style>
+  /* ── Dot ────────────────────────────────────────────── */
+  #tg-cur {
+    position:       fixed;
+    width:          10px;
+    height:         10px;
+    background:     var(--accent);
+    border-radius:  50%;
+    pointer-events: none;
+    z-index:        9999;
+    transform:      translate(-50%, -50%);
+    mix-blend-mode: screen;
+    transition:     width .18s ease, height .18s ease, background .18s ease;
+    will-change:    left, top;
+  }
+
+  /* ── Ring ───────────────────────────────────────────── */
+  #tg-ring {
+    position:       fixed;
+    width:          36px;
+    height:         36px;
+    border:         1px solid rgba(139,92,246,0.4);
+    border-radius:  50%;
+    pointer-events: none;
+    z-index:        9998;
+    transform:      translate(-50%, -50%);
+    transition:     width .15s ease, height .15s ease, border-color .15s ease;
+    will-change:    left, top;
+  }
+
+  /* ── Hover state (enlarged) ─────────────────────────── */
+  #tg-cur.hovered  { width: 18px; height: 18px; }
+  #tg-ring.hovered { width: 52px; height: 52px; border-color: rgba(139,92,246,0.7); }
+
+  /* ── Hide on touch / mobile ─────────────────────────── */
+  @media (max-width: 1100px) {
+    #tg-cur, #tg-ring { display: none; }
+  }
+</style>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// Custom cursor — dual layer: snapping dot + lagging ring
+// ══════════════════════════════════════════════════════════════════
+
+const dot  = document.getElementById('tg-cur');
+const ring = document.getElementById('tg-ring');
+
+// Current mouse position (updated immediately on mousemove)
+let mx = -999, my = -999;
+// Ring's lerped position
+let rx = -999, ry = -999;
+
+// ── Mouse position tracking ──────────────────────────────────────
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+// ── Hover detection ──────────────────────────────────────────────
+// Elements with [data-cursor-hover], or any interactive element, trigger the enlarged state.
+const HOVER_SELECTOR = 'a, button, [data-cursor-hover], .skill-badge, .srv-item, .pos-card, .proj-card, .btn-social';
+
+document.addEventListener('mouseover', e => {
+  const isHover = /** @type {Element} */ (e.target).closest(HOVER_SELECTOR);
+  dot.classList.toggle('hovered',  !!isHover);
+  ring.classList.toggle('hovered', !!isHover);
+});
+
+// ── Animation loop ───────────────────────────────────────────────
+// The dot snaps instantly; the ring lerps (smoothly follows) at 12%.
+// Lerp formula: current += (target - current) * factor
+const LERP = 0.12;
+
+function animateCursor() {
+  // Snap dot to exact cursor position
+  dot.style.left = mx + 'px';
+  dot.style.top  = my + 'px';
+
+  // Lerp ring toward cursor
+  rx += (mx - rx) * LERP;
+  ry += (my - ry) * LERP;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+</script>

@@ -1,0 +1,104 @@
+---
+// ── src/components/sections/RichTextSection.astro ────────────────
+// Renders arbitrary Portable Text (Sanity's rich text format) as HTML.
+// Uses @portabletext/to-html for server-side rendering — no client JS needed.
+
+import { toHTML } from '@portabletext/to-html';
+import { imageUrl } from '../../lib/sanity';
+import type { RichTextSection } from '../../lib/sanity';
+
+interface Props { data: RichTextSection; }
+const { data } = Astro.props;
+
+// Custom Portable Text serialisers — maps Sanity block types to HTML strings
+const components = {
+  types: {
+    // Inline images in the rich text body
+    image: ({ value }: any) => {
+      const url = imageUrl(value, 900);
+      const alt = value.alt ?? '';
+      const caption = value.caption ?? '';
+      return `
+        <figure class="rt-figure">
+          <img src="${url}" alt="${alt}" loading="lazy" />
+          ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+        </figure>
+      `;
+    },
+    // Code block
+    codeBlock: ({ value }: any) => `
+      <div class="rt-code-block">
+        <span class="rt-code-lang">${value.language ?? 'code'}</span>
+        <pre><code>${value.code ?? ''}</code></pre>
+      </div>
+    `,
+  },
+  marks: {
+    // External links
+    link: ({ children, value }: any) =>
+      `<a href="${value.href}" target="_blank" rel="noopener noreferrer" class="rt-link">${children}</a>`,
+  },
+  block: {
+    // Block quote styling
+    blockquote: ({ children }: any) => `<blockquote class="rt-blockquote">${children}</blockquote>`,
+  },
+};
+
+const htmlContent = data.content ? toHTML(data.content, { components }) : '';
+---
+
+<section class="richtext-section reveal">
+  {data.sectionTitle && <h2 class="rt-title">{data.sectionTitle}</h2>}
+  <div class="rt-body" set:html={htmlContent} />
+</section>
+
+<style>
+  .richtext-section {
+    position: relative; z-index: 2;
+    padding: 80px var(--section-pad, 64px);
+    max-width: 760px; margin: 0 auto;
+  }
+
+  .rt-title {
+    font-family: var(--font-display); font-size: 28px; font-weight: 700;
+    color: var(--text); margin-bottom: 32px; letter-spacing: -0.01em;
+  }
+
+  /* ── Portable Text HTML output styles ─────────────────── */
+  .rt-body :global(h2)  { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text); margin: 32px 0 16px; }
+  .rt-body :global(h3)  { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--text); margin: 24px 0 12px; }
+  .rt-body :global(p)   { font-size: 15px; color: var(--text-dim); line-height: 1.8; margin-bottom: 16px; }
+  .rt-body :global(strong) { color: var(--text); font-weight: 700; }
+  .rt-body :global(em)     { font-style: italic; color: var(--text-dim); }
+  .rt-body :global(code)   { font-family: var(--font-mono); font-size: 13px; background: rgba(139,92,246,0.1); color: var(--accent); padding: 2px 6px; border-radius: 4px; }
+
+  .rt-body :global(.rt-link) { color: var(--accent2); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+  .rt-body :global(.rt-link:hover) { color: var(--accent); }
+
+  .rt-body :global(.rt-blockquote) {
+    border-left: 3px solid var(--accent); padding-left: 20px; margin: 24px 0;
+    font-style: italic; color: var(--text-muted);
+  }
+
+  .rt-body :global(.rt-figure) { margin: 28px 0; }
+  .rt-body :global(.rt-figure img) { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
+  .rt-body :global(.rt-figure figcaption) { font-size: 12px; color: var(--text-muted); margin-top: 8px; text-align: center; font-family: var(--font-mono); }
+
+  .rt-body :global(.rt-code-block) {
+    margin: 24px 0; border-radius: 12px; border: 1px solid var(--border);
+    overflow: hidden; background: rgba(0,0,0,0.4);
+  }
+  .rt-body :global(.rt-code-lang) {
+    display: block; font-family: var(--font-mono); font-size: 10px;
+    color: var(--accent); padding: 8px 16px;
+    border-bottom: 1px solid var(--border); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .rt-body :global(.rt-code-block pre) { padding: 16px; overflow-x: auto; }
+  .rt-body :global(.rt-code-block code) {
+    background: none; color: var(--text-dim); font-size: 13px; padding: 0; border-radius: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .richtext-section { padding: 60px 32px; }
+  }
+</style>

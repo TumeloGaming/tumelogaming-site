@@ -1,0 +1,108 @@
+---
+// ── src/components/sections/ServersSection.astro ─────────────────
+// Minecraft server history grid — server name + colour-coded role badge.
+
+import type { ServersSection } from '../../lib/sanity';
+
+interface Props { data: ServersSection; }
+const { data } = Astro.props;
+
+// Role colour → CSS class (matches original design)
+const ROLE_CLASS: Record<string, string> = {
+  mod:     'r-mod',
+  admin:   'r-adm',
+  manager: 'r-mgr',
+  dev:     'r-dev',
+  exec:    'r-exc',
+  builder: 'r-bld',
+};
+
+const servers = data.servers ?? [];
+---
+
+<section class="servers-section reveal" id="servers">
+  <div class="srv-header">
+    <div>
+      <span class="mlabel" style="margin-bottom:12px;display:block">{data.sectionLabel}</span>
+      <h2>{data.sectionTitle ?? 'Server Experience'}</h2>
+    </div>
+    <!-- Large count display -->
+    <div class="srv-count">{servers.length}</div>
+  </div>
+
+  <div class="srv-grid">
+    {servers.map(s => (
+      <div class="srv-item" data-cursor-hover>
+        <span class="srv-name">{s.name}</span>
+        <span class={`srv-role ${ROLE_CLASS[s.color] ?? 'r-mod'}`}>{s.role}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .servers-section { position: relative; z-index: 2; padding: 0 0 100px; }
+
+  .srv-header {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(6,182,212,0.04));
+    border-top: 1px solid rgba(139,92,246,0.15);
+    border-bottom: 1px solid rgba(139,92,246,0.1);
+    padding: 40px var(--section-pad, 64px);
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 48px;
+  }
+  .srv-header h2 { font-family: var(--font-display); font-size: 28px; font-weight: 700; }
+
+  .mlabel {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    padding: 5px 14px; border: 1px solid rgba(139,92,246,0.3); border-radius: 100px;
+    background: rgba(139,92,246,0.08); display: inline-flex; align-items: center;
+  }
+
+  .srv-count {
+    font-family: var(--font-display); font-size: 56px; font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    line-height: 1;
+  }
+
+  .srv-grid {
+    padding: 0 var(--section-pad, 64px);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  }
+
+  .srv-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 17px; border-radius: 13px;
+    background: var(--surface); border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .srv-item:hover {
+    border-color: rgba(139,92,246,0.2);
+    background: var(--surface2);
+    transform: translateX(3px);
+  }
+
+  .srv-name { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+  .srv-role {
+    font-family: var(--font-mono); font-size: 9px; padding: 3px 9px;
+    border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* Role badge colour variants */
+  .r-mod { background: rgba(6,182,212,0.1);   color: #06b6d4; border: 1px solid rgba(6,182,212,0.2);   }
+  .r-adm { background: rgba(244,114,182,0.1); color: #f472b6; border: 1px solid rgba(244,114,182,0.2); }
+  .r-mgr { background: rgba(139,92,246,0.1);  color: #8b5cf6; border: 1px solid rgba(139,92,246,0.2);  }
+  .r-dev { background: rgba(34,197,94,0.1);   color: #4ade80; border: 1px solid rgba(34,197,94,0.2);   }
+  .r-exc { background: rgba(251,191,36,0.1);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.2);  }
+  .r-bld { background: rgba(249,115,22,0.1);  color: #fb923c; border: 1px solid rgba(249,115,22,0.2);  }
+
+  @media (max-width: 1100px) {
+    .srv-grid { grid-template-columns: 1fr 1fr; padding: 0 32px; }
+    .srv-header { padding: 32px; }
+  }
+  @media (max-width: 600px) {
+    .srv-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,36 +1,44 @@
-[build]
-  functions = "netlify/functions"
+# ── netlify.toml ────────────────────────────────────────────────
+# Netlify build & routing configuration.
+# The old github-API-write logic is completely replaced by Sanity.
+# Astro's Netlify adapter auto-generates the required functions config.
 
-[functions]
-  node_bundler = "esbuild"
+[build]
+  command   = "npm run build"
+  publish   = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
-# Security headers for admin
+# ── Security headers ────────────────────────────────────────────
+# Apply to ALL pages (not just /admin which no longer exists).
 [[headers]]
-  for = "/admin/*"
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+
+# Lock down the studio so only authenticated Sanity users can use it.
+[[headers]]
+  for = "/studio/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
 
-# Admin pretty URL — must come BEFORE the catch-all
-[[redirects]]
-  from = "/admin"
-  to   = "/admin/index.html"
-  status = 200
-  force = true
+# ── Redirects ───────────────────────────────────────────────────
+# Astro's Netlify adapter handles SSR routing automatically via
+# its generated _redirects file. These are supplementary rules.
 
-# Do NOT redirect admin/* to index.html — let it serve its own file
+# Keep any old /admin links working → redirect to new Studio URL.
 [[redirects]]
-  from = "/admin/*"
-  to   = "/admin/:splat"
-  status = 200
-  force = true
+  from   = "/admin"
+  to     = "/studio"
+  status = 301
+  force  = true
 
-# content.json should always be served as-is (no redirect)
 [[redirects]]
-  from = "/content.json"
-  to   = "/content.json"
-  status = 200
-  force = true
+  from   = "/admin/*"
+  to     = "/studio"
+  status = 301
+  force  = true
