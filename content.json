@@ -14,7 +14,7 @@
       "🌐 Web Developer"
     ],
     "stats": {
-      "servers": "17",
+      "servers": "18",
       "experience": "3+"
     },
     "socials": [
@@ -77,6 +77,17 @@
       "linkText": "Join Essence SMP",
       "tag": "Active",
       "tagColor": "purple"
+    },
+    {
+      "id": "pos1777940173747",
+      "icon": "✦",
+      "title": "Nexus SMP Developer",
+      "subtitle": "Developer",
+      "description": "Server with more than 3k members on discord, and 40+ active players in minecraft",
+      "link": "https://discord.gg/rQn9uMC8mC",
+      "linkText": "Join Nexus SMP",
+      "tag": "Active",
+      "tagColor": "pink"
     }
   ],
   "projects": [
@@ -186,6 +197,11 @@
       "name": "Starlight Smp",
       "role": "Co-owner",
       "color": "exec"
+    },
+    {
+      "name": "Nexus SMP",
+      "role": "Developer",
+      "color": "dev"
     }
   ],
   "contact": {
