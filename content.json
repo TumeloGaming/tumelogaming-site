@@ -57,17 +57,6 @@
       "tagColor": "pink"
     },
     {
-      "id": "pos2",
-      "icon": "⛏️",
-      "title": "MineStorm Dev and Manager",
-      "subtitle": "Server manager and Developer",
-      "description": "MineStorm is an upcoming Minecraft server that I am a Developer and Manager on.",
-      "link": "https://discord.gg/jnQFJzbHCK",
-      "linkText": "Join MineStorm",
-      "tag": "Active",
-      "tagColor": "cyan"
-    },
-    {
       "id": "pos1774962402765",
       "icon": "✦",
       "title": "Essence SMP Developer",
