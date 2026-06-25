@@ -91,6 +91,16 @@
       "platform": "web"
     },
     {
+      "id": "proj23746872",
+      "title": "ClientSide-AC",
+      "description": "A client-side, detection-only Fabric mod for Minecraft 1.21.11 that heuristically flags suspected cheaters on multiplayer servers. Because it is purely client-side it cannot see another player's inputs or health directly, so every detection is a heuristic with a confidence score - treat it as a hint, not proof.",
+      "link": "https://github.com/TumeloGaming/ClientSide-AC",
+      "linkText": "Try the beta",
+      "pfp": "https://cdn.discordapp.com/avatars/1153773793660117123/73d3512d0010ffd256e390524823b4ae.webp?size=1024",
+      "pfpEmoji": "🛠️",
+      "platform": "github"
+    },
+    {
       "id": "proj1771626433878",
       "title": "TumMulti",
       "description": "Yes, my very own semi multi-purpose discord bot, I've been working on this bot for quite a while now, but I will eventually iron out the bugs and errors. But the bot is still functional, and you can try it out :D",
